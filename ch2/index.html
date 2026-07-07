@@ -3139,7 +3139,7 @@ body.focusMode .hint::after{content:' • Press F or Esc to exit full-slide mode
   position:relative;
   z-index:1;
 }
-/* Column plan: 1 Frame H | 2 Packet H | 3 Segment H | 4 Data | 5 Trailer.
+/* Column plan: 1 Data Link H | 2 Network H | 3 Transport H | 4 Data | 5 Data Link Trailer.
    This keeps every Data block vertically aligned across all encapsulation layers. */
 .ed17Row[data-layer="app"] .ed17Block.data{grid-column:4;}
 .ed17Row[data-layer="transport"] .ed17Block.transport{grid-column:3;}
@@ -3885,7 +3885,14 @@ body.focusMode .hint::after{content:' • Press F or Esc to exit full-slide mode
 .slide14Symmetry .netInfoCard h3{font-size:27px!important;margin-bottom:12px!important;}
 .slide14Symmetry .netInfoCard p{font-size:20px!important;line-height:1.42!important;}
 .slide14Symmetry .netInfoCard .pill{font-size:15.8px!important;margin:4px 4px 4px 0!important;padding:8px 11px!important;}
-.slide14Symmetry .tcpLogicalTravel.active{opacity:.96!important;stroke-width:6!important;filter:drop-shadow(0 0 8px rgba(118,97,220,.28));}
+.slide14Symmetry .peerLayerLine{opacity:.12;transition:opacity .18s ease,stroke-width .18s ease;}
+.slide14Symmetry .peerLayerLine.active{opacity:.92!important;stroke-width:5!important;filter:drop-shadow(0 0 7px rgba(118,97,220,.28));}
+.slide14Symmetry .peerLayerLabel{opacity:.16;transition:opacity .18s ease;}
+.slide14Symmetry .peerLayerLabel.active{opacity:1!important;fill:#7661dc!important;}
+.slide14Symmetry .travelPathLabel{opacity:.16;transition:opacity .18s ease;}
+.slide14Symmetry .tcpLogicalTravel.active + .travelPathLabel,
+.slide14Symmetry .travelPathLabel.active{opacity:.88!important;fill:#7661dc!important;}
+.slide14Symmetry .tcpLogicalTravel.active{opacity:.42!important;stroke-width:4.5!important;filter:drop-shadow(0 0 7px rgba(118,97,220,.22));}
 .slide14Symmetry .physicalLine.active{stroke:var(--orange)!important;stroke-width:7!important;filter:drop-shadow(0 0 6px rgba(240,144,50,.36));}
 .slide14Symmetry .packetDot.run{opacity:1!important;animation:netPacketHopSlide14 10.8s linear infinite!important;}
 @keyframes netPacketHopSlide14{
@@ -4524,6 +4531,151 @@ body.focusMode .hint::after{content:' • Press F or Esc to exit full-slide mode
 .protocolIsSlide .protocolPicture{min-height:255px!important;}
 .protocolIsSlide .protoBookIcon{font-size:32px!important;}
 
+
+
+/* v72 slide 13: darker down/across/up path + pulsing peer-layer lines */
+.slide14Symmetry .peerLayerLine{
+  opacity:.10!important;
+  transition:opacity .18s ease, stroke-width .18s ease, stroke .18s ease, filter .18s ease!important;
+}
+.slide14Symmetry .peerLayerLine.active{
+  opacity:.34!important;
+  stroke:#aaa2ea!important;
+  stroke-width:3.4!important;
+  filter:none!important;
+}
+.slide14Symmetry .tcpLogicalTravel.active{
+  opacity:1!important;
+  stroke:#3f2bc4!important;
+  stroke-width:6.8!important;
+  stroke-dasharray:14 8!important;
+  filter:drop-shadow(0 0 10px rgba(63,43,196,.42))!important;
+}
+.slide14Symmetry .tcpLogicDot.run{
+  fill:#3f2bc4!important;
+  filter:drop-shadow(0 0 10px rgba(63,43,196,.55))!important;
+}
+.slide14Symmetry .peerLayerLabel.active{fill:#6c63c8!important;}
+.slide14Symmetry .travelPathLabel.active{fill:#3f2bc4!important;opacity:1!important;}
+.slide14Symmetry .peerLayerLine.active.peerAppLine{animation:peerPulseAppSlide13 16s linear infinite!important;}
+.slide14Symmetry .peerLayerLine.active.peerTransportLine{animation:peerPulseTransportSlide13 16s linear infinite!important;}
+.slide14Symmetry .peerLayerLine.active.peerNetworkLine{animation:peerPulseNetworkSlide13 16s linear infinite!important;}
+.slide14Symmetry .peerLayerLine.active.peerDataLinkLine{animation:peerPulseDataLinkSlide13 16s linear infinite!important;}
+.slide14Symmetry .peerLayerLine.active.peerPhysicalLine{animation:peerPulsePhysicalSlide13 16s linear infinite!important;}
+@keyframes peerPulseAppSlide13{
+  0%,3%,64%,67%,99%,100%{opacity:.98;stroke:#5c4be0;stroke-width:6.2;filter:drop-shadow(0 0 9px rgba(92,75,224,.48));}
+  4%,63%,68%,98%{opacity:.34;stroke:#aaa2ea;stroke-width:3.4;filter:none;}
+}
+@keyframes peerPulseTransportSlide13{
+  7%,10%,57%,60%,71%,73%,97.8%,98.8%{opacity:.98;stroke:#5c4be0;stroke-width:6.2;filter:drop-shadow(0 0 9px rgba(92,75,224,.48));}
+  0%,6%,11%,56%,61%,70%,74%,97.7%,98.9%,100%{opacity:.34;stroke:#aaa2ea;stroke-width:3.4;filter:none;}
+}
+@keyframes peerPulseNetworkSlide13{
+  14%,17%,50%,53%,76%,78%,95.5%,96.6%{opacity:.98;stroke:#5c4be0;stroke-width:6.2;filter:drop-shadow(0 0 9px rgba(92,75,224,.48));}
+  0%,13%,18%,49%,54%,75%,79%,95.4%,96.7%,100%{opacity:.34;stroke:#aaa2ea;stroke-width:3.4;filter:none;}
+}
+@keyframes peerPulseDataLinkSlide13{
+  21%,24%,43%,46%,81%,83%,93%,94.2%{opacity:.98;stroke:#5c4be0;stroke-width:6.2;filter:drop-shadow(0 0 9px rgba(92,75,224,.48));}
+  0%,20%,25%,42%,47%,80%,84%,92.9%,94.3%,100%{opacity:.34;stroke:#aaa2ea;stroke-width:3.4;filter:none;}
+}
+@keyframes peerPulsePhysicalSlide13{
+  28%,31%,36%,39%,85%,91%{opacity:.98;stroke:#5c4be0;stroke-width:6.2;filter:drop-shadow(0 0 9px rgba(92,75,224,.48));}
+  0%,27%,32%,35%,40%,84%,92%,100%{opacity:.34;stroke:#aaa2ea;stroke-width:3.4;filter:none;}
+}
+
+
+
+/* v73 slide 13: manual logical-dot travel controls */
+.slide14Symmetry .logicTravelControls{
+  margin-top:10px!important;
+  display:grid!important;
+  grid-template-columns:auto auto auto 1fr!important;
+  gap:8px!important;
+  align-items:center!important;
+}
+.slide14Symmetry .logicTravelControls button{
+  font-size:15.5px!important;
+  padding:10px 12px!important;
+  border-radius:14px!important;
+}
+.slide14Symmetry .logicTravelControls .stepBadge{
+  min-height:39px;
+  justify-content:flex-start;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.slide14Symmetry.manualLogic .peerLayerLine.active{
+  animation:none!important;
+  opacity:.30!important;
+  stroke:#aaa2ea!important;
+  stroke-width:3.3!important;
+  filter:none!important;
+}
+.slide14Symmetry.manualLogic .peerLayerLine.active.pulseNow{
+  opacity:1!important;
+  stroke:#5c4be0!important;
+  stroke-width:6.5!important;
+  filter:drop-shadow(0 0 9px rgba(92,75,224,.48))!important;
+  animation:manualPeerPulseSlide13 .85s ease-in-out infinite alternate!important;
+}
+.slide14Symmetry .peerLayerLine.pulseNow{
+  opacity:1!important;
+  stroke:#5c4be0!important;
+  stroke-width:6.5!important;
+  filter:drop-shadow(0 0 9px rgba(92,75,224,.48))!important;
+  animation:manualPeerPulseSlide13 .85s ease-in-out infinite alternate!important;
+}
+.slide14Symmetry .tcpLogicDot.manualStep{
+  opacity:1!important;
+  animation:none!important;
+  fill:#3f2bc4!important;
+  filter:drop-shadow(0 0 10px rgba(63,43,196,.55))!important;
+  transition:transform .42s ease-in-out!important;
+}
+@keyframes manualPeerPulseSlide13{
+  from{opacity:.55;stroke-width:4.5;filter:drop-shadow(0 0 3px rgba(92,75,224,.25));}
+  to{opacity:1;stroke-width:7;filter:drop-shadow(0 0 10px rgba(92,75,224,.55));}
+}
+@media(max-width:1050px){
+  .slide14Symmetry .logicTravelControls{grid-template-columns:1fr 1fr 1fr!important;}
+  .slide14Symmetry .logicTravelControls .stepBadge{grid-column:1/-1;}
+}
+
+
+/* v74 slide 13: smaller logical travel controls and thinner logical travel line */
+.slide14Symmetry .logicTravelControls{
+  margin-top:7px!important;
+  grid-template-columns:auto auto auto minmax(0,1fr)!important;
+  gap:6px!important;
+}
+.slide14Symmetry .logicTravelControls button{
+  font-size:12.5px!important;
+  padding:6px 8px!important;
+  border-radius:10px!important;
+  min-height:30px!important;
+  box-shadow:0 3px 10px rgba(25,35,52,.06)!important;
+}
+.slide14Symmetry .logicTravelControls .stepBadge{
+  min-height:30px!important;
+  padding:5px 9px!important;
+  font-size:12.5px!important;
+  line-height:1.15!important;
+}
+.slide14Symmetry .tcpLogicalTravel{
+  stroke-width:3!important;
+}
+.slide14Symmetry .tcpLogicalTravel.active{
+  stroke-width:4.2!important;
+  stroke-dasharray:11 7!important;
+  filter:drop-shadow(0 0 5px rgba(63,43,196,.24))!important;
+}
+.slide14Symmetry .tcpLogicDot{
+  r:8;
+}
+@media(max-width:1050px){
+  .slide14Symmetry .logicTravelControls button{font-size:12px!important;padding:6px 7px!important;}
+}
+
 </style>
 </head>
 <body>
@@ -4911,7 +5063,7 @@ In real life, one task often has several ordered responsibilities. Booking a fli
 </div>
 </section>
 
-<section class="slide compact slide14Symmetry" data-note="This slide shows TCP/IP stacks on both hosts. Physical path is the real hop-by-hop path; logical view shows data travelling down the sender stack, across the network path, and up the receiver stack." data-section="TCP/IP Internet Model" data-title="Physical vs Logical View">
+<section class="slide compact slide14Symmetry" data-note="This slide shows TCP/IP stacks on both hosts. Physical path is the real hop-by-hop path; logical view uses dashed peer-layer lines to show same-layer communication while data still travels down the sender stack and up the receiver stack." data-section="TCP/IP Internet Model" data-title="Physical vs Logical View">
 <div class="kicker">Communication view</div><h2>TCP/IP Communication: Physical Path vs Logical View</h2>
 <div class="grid2 physicalLogicalSlide physicalLogicalSlideV2">
 <div class="diagram physicalLogicalDiagram">
@@ -4940,9 +5092,16 @@ In real life, one task often has several ordered responsibilities. Booking a fli
 <text class="svgText slide14Layer" text-anchor="middle" x="755" y="234">Data Link</text>
 <rect fill="#eef5ff" height="42" rx="14" stroke="#b7d1e7" stroke-width="2.5" width="198" x="656" y="265"></rect>
 <text class="svgText slide14Layer" text-anchor="middle" x="755" y="286">Physical</text>
-<!-- Logical TCP/IP view: no arrowheads -->
-<path class="tcpLogicalTravel" d="M258 78 V286 H642 V78" fill="none" opacity=".12" stroke="#7661dc" stroke-dasharray="12 9" stroke-linecap="round" stroke-linejoin="round" stroke-width="5"></path>
-<text class="svgText slide14MiniLabel" fill="#7661dc" text-anchor="middle" x="450" y="266">logical layer flow</text>
+<!-- Logical TCP/IP view: dashed peer-layer relationships plus real layer travel -->
+<g aria-label="Logical peer-layer communication lines">
+<line class="peerLayerLine peerAppLine" stroke="#7661dc" stroke-dasharray="12 9" stroke-linecap="round" stroke-width="4" x1="258" x2="642" y1="78" y2="78"></line>
+<line class="peerLayerLine peerTransportLine" stroke="#7661dc" stroke-dasharray="12 9" stroke-linecap="round" stroke-width="4" x1="258" x2="642" y1="130" y2="130"></line>
+<line class="peerLayerLine peerNetworkLine" stroke="#7661dc" stroke-dasharray="12 9" stroke-linecap="round" stroke-width="4" x1="258" x2="642" y1="182" y2="182"></line>
+<line class="peerLayerLine peerDataLinkLine" stroke="#7661dc" stroke-dasharray="12 9" stroke-linecap="round" stroke-width="4" x1="258" x2="642" y1="234" y2="234"></line>
+<line class="peerLayerLine peerPhysicalLine" stroke="#7661dc" stroke-dasharray="12 9" stroke-linecap="round" stroke-width="4" x1="258" x2="642" y1="286" y2="286"></line>
+</g>
+<text class="svgText slide14MiniLabel peerLayerLabel" fill="#7661dc" text-anchor="middle" x="450" y="51">dashed lines = same-layer logical communication</text>
+<path class="tcpLogicalTravel" d="M258 78 V286 H642 V78" fill="none" opacity=".08" stroke="#7661dc" stroke-dasharray="12 9" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"></path>
 <circle class="tcpLogicDot" cx="258" cy="78" id="tcpLogicDot" r="10"></circle>
 <!-- Physical network path: centered and symmetric, no arrowheads -->
 <line class="physicalLine" stroke="#31a4d8" stroke-linecap="round" stroke-width="5" x1="190" x2="272" y1="360" y2="360"></line>
@@ -4980,6 +5139,12 @@ In real life, one task often has several ordered responsibilities. Booking a fli
 </div>
 <div>
 <div class="controls netModeControls"><button class="netMode active" data-mode="physical">Physical path</button><button class="netMode" data-mode="logical">Logical view</button></div>
+<div class="controls logicTravelControls" id="logicTravelControls" aria-label="Logical dot travel controls">
+<button id="logicTravelPrev">◀ Prev</button>
+<button class="primary" id="logicTravelPlay">▶ Play</button>
+<button id="logicTravelNext">Next ▶</button>
+<span class="stepBadge" id="logicTravelCounter">Step 1 / 19</span>
+</div>
 <div class="card soft netInfoCard" id="netInfo"><h3>Physical path</h3><p>The signal/data physically moves hop by hop through links and devices. Intermediate devices forward it toward the destination.</p><div class="pill">actual path</div><div class="pill">device by device</div><div class="pill">bits/signals on media</div></div>
 </div>
 </div>
@@ -5014,10 +5179,10 @@ In real life, one task often has several ordered responsibilities. Booking a fli
 </div>
 <div class="ed17Legend">
 <span class="legendChip"><i class="lg data"></i> Data</span>
-<span class="legendChip"><i class="lg transport"></i> Segment header</span>
-<span class="legendChip"><i class="lg network"></i> Packet header</span>
-<span class="legendChip"><i class="lg link"></i> Frame header</span>
-<span class="legendChip"><i class="lg trailer"></i> Frame trailer</span>
+<span class="legendChip"><i class="lg transport"></i> Transport header</span>
+<span class="legendChip"><i class="lg network"></i> Network header</span>
+<span class="legendChip"><i class="lg link"></i> Data Link header</span>
+<span class="legendChip"><i class="lg trailer"></i> Data Link trailer</span>
 <span class="legendChip"><i class="lg bits"></i> Bits</span>
 </div>
 <div class="ed17Body">
@@ -5037,17 +5202,17 @@ In real life, one task often has several ordered responsibilities. Booking a fli
 </button>
 <button class="ed17Row ed17Jump" data-layer="transport" data-step="1">
 <div class="ed17Arrow left">➜</div>
-<div class="ed17Blocks"><span class="ed17Block transport">Segment<br/>header</span><span class="ed17Block data">Data</span></div>
+<div class="ed17Blocks"><span class="ed17Block transport">Transport<br/>header</span><span class="ed17Block data">Data</span></div>
 <div class="ed17Arrow right">➜</div>
 </button>
 <button class="ed17Row ed17Jump" data-layer="network" data-step="2">
 <div class="ed17Arrow left">➜</div>
-<div class="ed17Blocks"><span class="ed17Block network">Packet<br/>header</span><span class="ed17Block transport">Segment<br/>header</span><span class="ed17Block data">Data</span></div>
+<div class="ed17Blocks"><span class="ed17Block network">Network<br/>header</span><span class="ed17Block transport">Transport<br/>header</span><span class="ed17Block data">Data</span></div>
 <div class="ed17Arrow right">➜</div>
 </button>
 <button class="ed17Row ed17Jump" data-layer="link" data-step="3">
 <div class="ed17Arrow left">➜</div>
-<div class="ed17Blocks"><span class="ed17Block link">Frame<br/>header</span><span class="ed17Block network">Packet<br/>header</span><span class="ed17Block transport">Segment<br/>header</span><span class="ed17Block data">Data</span><span class="ed17Block trailer">Frame<br/>trailer</span></div>
+<div class="ed17Blocks"><span class="ed17Block link">Data Link<br/>header</span><span class="ed17Block network">Network<br/>header</span><span class="ed17Block transport">Transport<br/>header</span><span class="ed17Block data">Data</span><span class="ed17Block trailer">Data Link<br/>trailer</span></div>
 <div class="ed17Arrow right">➜</div>
 </button>
 <button class="ed17Row ed17Jump" data-layer="physical" data-step="4">
@@ -5683,23 +5848,125 @@ const netInfo={
   ],
   logical:[
     'Logical view',
-    'The purple dot now pauses at each TCP/IP layer on the request path and again on the return path, showing encapsulation and decapsulation on both hosts.',
-    '<div class="pill">down sender stack</div><div class="pill">across network path</div><div class="pill">up receiver stack</div>'
+    'Use Prev / Play / Next to move the purple dot through each layer. The matching dashed line pulses when the dot is at that layer, showing peer-layer logical communication.',
+    '<div class="pill">same-layer logical lines</div><div class="pill">manual step control</div><div class="pill">down / across / up</div>'
   ]
 };
+let logicalTravelStep=0;
+let logicalTravelTimer=null;
+const logicalTravelSteps=[
+  {x:0,y:0,layer:'app',label:'Host A: Application'},
+  {x:0,y:52,layer:'transport',label:'Host A: Transport'},
+  {x:0,y:104,layer:'network',label:'Host A: Network'},
+  {x:0,y:156,layer:'link',label:'Host A: Data Link'},
+  {x:0,y:208,layer:'physical',label:'Host A: Physical'},
+  {x:384,y:208,layer:'physical',label:'Host B: Physical'},
+  {x:384,y:156,layer:'link',label:'Host B: Data Link'},
+  {x:384,y:104,layer:'network',label:'Host B: Network'},
+  {x:384,y:52,layer:'transport',label:'Host B: Transport'},
+  {x:384,y:0,layer:'app',label:'Host B: Application'},
+  {x:384,y:52,layer:'transport',label:'Host B response: Transport'},
+  {x:384,y:104,layer:'network',label:'Host B response: Network'},
+  {x:384,y:156,layer:'link',label:'Host B response: Data Link'},
+  {x:384,y:208,layer:'physical',label:'Host B response: Physical'},
+  {x:0,y:208,layer:'physical',label:'Host A receives: Physical'},
+  {x:0,y:156,layer:'link',label:'Host A receives: Data Link'},
+  {x:0,y:104,layer:'network',label:'Host A receives: Network'},
+  {x:0,y:52,layer:'transport',label:'Host A receives: Transport'},
+  {x:0,y:0,layer:'app',label:'Host A receives: Application'}
+];
+const logicalLayerLineClass={
+  app:'peerAppLine',
+  transport:'peerTransportLine',
+  network:'peerNetworkLine',
+  link:'peerDataLinkLine',
+  physical:'peerPhysicalLine'
+};
+function isLogicalModeActive(){
+  const logicalBtn=document.querySelector('.netMode[data-mode="logical"]');
+  return !!logicalBtn && logicalBtn.classList.contains('active');
+}
+function stopLogicalTravel(){
+  if(logicalTravelTimer){
+    clearInterval(logicalTravelTimer);
+    logicalTravelTimer=null;
+  }
+  const playBtn=document.getElementById('logicTravelPlay');
+  if(playBtn) playBtn.textContent='▶ Play';
+}
+function clearLogicalPulse(){
+  document.querySelectorAll('.peerLayerLine').forEach(line=>line.classList.remove('pulseNow'));
+}
+function renderLogicalTravel(){
+  const dot=document.getElementById('tcpLogicDot');
+  const step=logicalTravelSteps[logicalTravelStep];
+  if(dot && step){
+    dot.classList.add('run','manualStep');
+    dot.style.transform=`translate(${step.x}px, ${step.y}px)`;
+  }
+  clearLogicalPulse();
+  const lineClass=step ? logicalLayerLineClass[step.layer] : null;
+  if(lineClass){
+    document.querySelectorAll('.'+lineClass).forEach(line=>line.classList.add('pulseNow'));
+  }
+  const counter=document.getElementById('logicTravelCounter');
+  if(counter && step){
+    counter.textContent=`Step ${logicalTravelStep+1} / ${logicalTravelSteps.length}: ${step.label}`;
+  }
+}
+function ensureLogicalMode(){
+  if(!isLogicalModeActive()) setNetMode('logical');
+}
+function setLogicalTravelStep(nextIndex){
+  stopLogicalTravel();
+  ensureLogicalMode();
+  logicalTravelStep=(nextIndex+logicalTravelSteps.length)%logicalTravelSteps.length;
+  renderLogicalTravel();
+}
+function playLogicalTravel(){
+  ensureLogicalMode();
+  if(logicalTravelTimer){
+    stopLogicalTravel();
+    return;
+  }
+  const playBtn=document.getElementById('logicTravelPlay');
+  if(playBtn) playBtn.textContent='⏸ Pause';
+  renderLogicalTravel();
+  logicalTravelTimer=setInterval(()=>{
+    logicalTravelStep=(logicalTravelStep+1)%logicalTravelSteps.length;
+    renderLogicalTravel();
+  },950);
+}
 function setNetMode(m){
   document.querySelectorAll('.netMode').forEach(b=>b.classList.toggle('active',b.dataset.mode===m));
+  document.querySelectorAll('.slide14Symmetry').forEach(slide=>slide.classList.toggle('manualLogic',m==='logical'));
   document.querySelectorAll('.physicalLine').forEach(l=>l.classList.toggle('active',m==='physical'));
   document.querySelectorAll('.tcpLogicalTravel').forEach(p=>p.classList.toggle('active',m==='logical'));
+  document.querySelectorAll('.peerLayerLine,.peerLayerLabel').forEach(el=>el.classList.toggle('active',m==='logical'));
   const packet=document.getElementById('netPacket');
   if(packet) packet.classList.toggle('run',m==='physical');
   const logicDot=document.getElementById('tcpLogicDot');
-  if(logicDot) logicDot.classList.toggle('run',m==='logical');
+  if(m==='logical'){
+    renderLogicalTravel();
+  }else{
+    stopLogicalTravel();
+    clearLogicalPulse();
+    if(logicDot){
+      logicDot.classList.remove('run','manualStep');
+      logicDot.style.transform='';
+    }
+  }
   const d=netInfo[m];
   const box=document.getElementById('netInfo');
   if(box) box.innerHTML=`<h3>${d[0]}</h3><p>${d[1]}</p><div style="margin-top:10px">${d[2]}</div>`;
 }
 document.querySelectorAll('.netMode').forEach(b=>b.onclick=()=>setNetMode(b.dataset.mode));
+const logicPrev=document.getElementById('logicTravelPrev');
+const logicPlay=document.getElementById('logicTravelPlay');
+const logicNext=document.getElementById('logicTravelNext');
+if(logicPrev) logicPrev.onclick=()=>setLogicalTravelStep(logicalTravelStep-1);
+if(logicPlay) logicPlay.onclick=()=>playLogicalTravel();
+if(logicNext) logicNext.onclick=()=>setLogicalTravelStep(logicalTravelStep+1);
 if(document.querySelector('.netMode')) setNetMode('physical');
 const conceptModeData={
   logical:['Logical path / Layer flow','Data moves down the sender stack, crosses the network path, moves up the receiver stack, then loops back so students can watch the full travel repeatedly.'],
@@ -5788,13 +6055,13 @@ const decap=[
 // Slide 17: combined encapsulation + decapsulation animation
 const encDecSteps=[
   {phase:'Encapsulation', phaseClass:'encap', host:'sender', layer:'app', pdu:'Data', title:'Application creates Data', location:'Sender', direction:'Downward', action:'Create original data', explain:'The sender application creates the original user data.'},
-  {phase:'Encapsulation', phaseClass:'encap', host:'sender', layer:'transport', pdu:'Segment', title:'Transport adds the segment header', location:'Sender', direction:'Downward', action:'Add segment header', explain:'The Transport layer adds a segment header, so the data unit becomes a segment.'},
-  {phase:'Encapsulation', phaseClass:'encap', host:'sender', layer:'network', pdu:'Packet', title:'Network adds the packet header', location:'Sender', direction:'Downward', action:'Add packet header', explain:'The Network layer adds an IP header for logical addressing and routing.'},
-  {phase:'Encapsulation', phaseClass:'encap', host:'sender', layer:'link', pdu:'Frame', title:'Data Link adds the frame wrapper', location:'Sender', direction:'Downward', action:'Add frame header + trailer', explain:'The Data Link layer adds a frame header and frame trailer for local delivery and error checking.'},
+  {phase:'Encapsulation', phaseClass:'encap', host:'sender', layer:'transport', pdu:'Segment', title:'Transport adds the transport header', location:'Sender', direction:'Downward', action:'Add transport header', explain:'The Transport layer adds a transport header, so the data unit becomes a segment.'},
+  {phase:'Encapsulation', phaseClass:'encap', host:'sender', layer:'network', pdu:'Packet', title:'Network adds the network header', location:'Sender', direction:'Downward', action:'Add network header', explain:'The Network layer adds a network header for logical addressing and routing.'},
+  {phase:'Encapsulation', phaseClass:'encap', host:'sender', layer:'link', pdu:'Frame', title:'Data Link adds the data-link header/trailer', location:'Sender', direction:'Downward', action:'Add data-link header + trailer', explain:'The Data Link layer adds a data-link header and data-link trailer for local delivery and error checking.'},
   {phase:'Transmission', phaseClass:'transmit', host:'both', layer:'physical', pdu:'Bits', title:'Physical layer sends bits', location:'Between sender and receiver', direction:'Across the medium', action:'Transmit as bits/signals', explain:'The Physical layer transmits the frame as a stream of bits/signals through the medium.'},
-  {phase:'De-encapsulation', phaseClass:'decap', host:'receiver', layer:'link', pdu:'Frame → Packet', location:'Receiver', direction:'Upward', action:'Remove frame header + trailer', explain:'At the receiver, the Data Link layer checks the frame and removes the frame header and frame trailer.'},
-  {phase:'De-encapsulation', phaseClass:'decap', host:'receiver', layer:'network', pdu:'Packet → Segment', location:'Receiver', direction:'Upward', action:'Remove packet header', explain:'The Network layer reads the IP header and removes it before passing the segment upward.'},
-  {phase:'De-encapsulation', phaseClass:'decap', host:'receiver', layer:'transport', pdu:'Segment → Data', location:'Receiver', direction:'Upward', action:'Remove segment header', explain:'The Transport layer reads the segment header and removes it before passing the data upward.'},
+  {phase:'De-encapsulation', phaseClass:'decap', host:'receiver', layer:'link', pdu:'Frame → Packet', location:'Receiver', direction:'Upward', action:'Remove data-link header + trailer', explain:'At the receiver, the Data Link layer checks the frame and removes the data-link header and data-link trailer.'},
+  {phase:'De-encapsulation', phaseClass:'decap', host:'receiver', layer:'network', pdu:'Packet → Segment', location:'Receiver', direction:'Upward', action:'Remove network header', explain:'The Network layer reads the network header and removes it before passing the segment upward.'},
+  {phase:'De-encapsulation', phaseClass:'decap', host:'receiver', layer:'transport', pdu:'Segment → Data', location:'Receiver', direction:'Upward', action:'Remove transport header', explain:'The Transport layer reads the transport header and removes it before passing the data upward.'},
   {phase:'De-encapsulation', phaseClass:'decap', host:'receiver', layer:'app', pdu:'Data', location:'Receiver', direction:'Upward', action:'Deliver original data', title:'Application receives Data', explain:'The receiver application gets the original data exactly as the sender created it.'}
 ];
 let encDecIndex=0, encDecTimer=null;
